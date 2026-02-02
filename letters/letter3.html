@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url('../assets/bg-letter1.jpg') center / cover no-repeat fixed;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .memory-board {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .polaroid {
+      position: absolute;
+      background: #fff;
+      padding: 15px 15px 60px 15px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: grab;
+      width: clamp(180px, 18vw, 280px);
+      transform-origin: center;
+      border-radius: 2px;
+    }
+
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      z-index: 10;
+    }
+
+    .polaroid img {
+      width: 100%;
+      height: clamp(180px, 18vw, 280px);
+      object-fit: cover;
+      background: #f0f0f0;
+      pointer-events: none;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: clamp(18px, 2vw, 26px);
+      color: #555;
+      transform: rotate(-2deg);
+    }
+
+    .polaroid:hover,
+    .polaroid.dragging {
+      transform: scale(1.1) rotate(0deg) !important;
+      z-index: 50 !important;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    .polaroid:active {
+      cursor: grabbing;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Caveat', cursive;
+      font-size: clamp(18px, 2vw, 26px);
+      color: #5d8aa8;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 5px 15px;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .back-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      width: 55px;
+      height: 55px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-btn:hover {
+      transform: scale(1.1);
+      color: #e74c3c;
+    }
+
+    @media (max-width: 600px) {
+      .polaroid {
+        width: 160px;
+        padding: 10px 10px 45px 10px;
+      }
+
+      .polaroid img {
+        height: 160px;
+      }
+
+      .caption {
+        font-size: 20px;
+      }
+
+      .back-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+      }
+
+      .hint {
+        font-size: 20px;
+        bottom: 80px;
+        width: max-content;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="memory-board" id="board">
+
+    <div class="polaroid p1" style="top: 25%; left: 10%; transform: rotate(-5deg);">
+      <img src="../assets/poloroid_1.jpg">
+      <div class="caption">Best-Friends?</div>
+    </div>
+
+    <div class="polaroid p2" style="top: 20%; right: 25%; transform: rotate(8deg);">
+      <img src="../assets/poloroid_2.jpg">
+      <div class="caption">Spidy 🕷️</div>
+    </div>
+
+    <div class="polaroid p3" style="bottom: 25%; left: 25%; transform: rotate(-12deg);">
+      <img src="../assets/poloroid_3.jpg">
+      <div class="caption">Memory Lane</div>
+    </div>
+
+    <div class="polaroid p4" style="bottom: 20%; right: 7%; transform: rotate(5deg);">
+      <img src="../assets/poloroid_4.jpg">
+      <div class="caption">IDK</div>
+    </div>
+
+    <div class="polaroid p5" style="bottom: 20%; right: 35%; transform: rotate(3deg);">
+      <img src="../assets/cutu.jpg">
+      <div class="caption">Hehe</div>
+    </div>
+
+  </div>
+
+  <div class="hint">Drag the photos around!</div>
+
+  <div class="back-btn" onclick="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+
+  <script>
+    const letterId = "3";
+    let opened = JSON.parse(localStorage.getItem('openedLetters')) || [];
+    if (!opened.includes(letterId)) {
+      opened.push(letterId);
+      localStorage.setItem('openedLetters', JSON.stringify(opened));
+    }
+
+    const polaroids = document.querySelectorAll('.polaroid');
+    let activeDrag = null;
+    let startX, startY, initialLeft, initialTop;
+    let maxZ = 10;
+
+    polaroids.forEach(p => {
+      p.addEventListener('mousedown', (e) => {
+        p.style.zIndex = ++maxZ;
+        startDrag(e, p);
+      });
+      p.addEventListener('touchstart', (e) => {
+        p.style.zIndex = ++maxZ;
+        startDrag(e.touches[0], p);
+      });
+    });
+
+    function startDrag(e, item) {
+      activeDrag = item;
+      activeDrag.classList.add('dragging');
+      startX = e.clientX;
+      startY = e.clientY;
+      initialLeft = activeDrag.offsetLeft;
+      initialTop = activeDrag.offsetTop;
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+      document.addEventListener('touchmove', onTouchMove);
+      document.addEventListener('touchend', onEnd);
+    }
+
+    function onMove(e) {
+      if (!activeDrag) return;
+      e.preventDefault();
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      activeDrag.style.left = `${initialLeft + dx}px`;
+      activeDrag.style.top = `${initialTop + dy}px`;
+    }
+
+    function onTouchMove(e) {
+      if (!activeDrag) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      activeDrag.style.left = `${initialLeft + dx}px`;
+      activeDrag.style.top = `${initialTop + dy}px`;
+    }
+
+    function onEnd() {
+      if (activeDrag) {
+        activeDrag.classList.remove('dragging');
+        activeDrag = null;
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onEnd);
+        document.removeEventListener('touchmove', onTouchMove);
+        document.removeEventListener('touchend', onEnd);
+      }
+    }
+
+    function goBack() {
+      window.location.href = '../hub.html';
+    }
+  </script>
+  <script src='../js/security.js'></script>
+</body>
+
+</html>

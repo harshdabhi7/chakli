@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;1,400&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: url('../assets/bg-letter1.jpg') center / cover no-repeat fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .book-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: clamp(30px, 5vw, 60px);
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .book-wrapper {
+            position: relative;
+            width: clamp(160px, 18vw, 260px);
+            height: clamp(240px, 27vw, 390px);
+            margin: 0 auto 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            background: url('../assets/fp.jpg') center/cover;
+            position: relative;
+            z-index: 2;
+        }
+
+        .book-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 15px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.3), transparent);
+            z-index: 3;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .book-wrapper::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 5px;
+            height: 96%;
+            width: 15px;
+            background: #eee;
+            z-index: 1;
+            transform: skewY(5deg);
+            border-radius: 0 4px 4px 0;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-wrapper:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(93, 138, 168, 0.3);
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(24px, 3vw, 38px);
+            color: #5d8aa8;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: clamp(14px, 1.5vw, 18px);
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        .read-btn {
+            display: inline-block;
+            padding: clamp(12px, 2vw, 16px) clamp(26px, 5vw, 44px);
+            font-size: clamp(14px, 1.4vw, 17px);
+            background: #e74c3c;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .read-btn:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
+        }
+
+        .back-arrow {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: clamp(44px, 4vw, 55px);
+            height: clamp(44px, 4vw, 55px);
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #555;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-arrow:hover {
+            background: #fff;
+            color: #e74c3c;
+            transform: scale(1.1);
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .book-container {
+                padding: 40px 20px;
+                width: 85%;
+            }
+
+            .book-wrapper {
+                width: 160px;
+                height: 240px;
+            }
+
+            .title {
+                font-size: 26px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 25px;
+            }
+
+            .read-btn {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="book-container">
+        <div class="book-wrapper">
+            <div class="book-cover"></div>
+        </div>
+
+        <div class="title">Chakli</div>
+        <div class="subtitle">Here 2 chapters for you</div>
+
+        <a href="../assets/Chakli The Book.pdf" target="_blank" class="read-btn">
+            Open
+        </a>
+    </div>
+
+    <div class="back-arrow" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i>
+    </div>
+
+    <script>
+        const letterId = "4";
+        let opened = JSON.parse(localStorage.getItem('openedLetters')) || [];
+        if (!opened.includes(letterId)) {
+            opened.push(letterId);
+            localStorage.setItem('openedLetters', JSON.stringify(opened));
+        }
+
+        function goBack() {
+            window.location.href = '../hub.html';
+        }
+    </script>
+    <script src='../js/security.js'></script>
+</body>
+
+</html>

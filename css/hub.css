@@ -1,0 +1,76 @@
+body {
+  background: url('../assets/bg-hub1.jpg') center / cover no-repeat;
+  height: 100vh;
+  margin: 0;
+}
+
+.hub {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 100vh;
+}
+
+.quadrant {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope {
+  width: clamp(160px, 22vw, 220px);
+  scale: 1.65;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.3));
+}
+
+.envelope:hover {
+  transform: translateY(-8px);
+}
+
+.envelope.read {
+  filter: grayscale(100%) brightness(0.3);
+  cursor: default;
+}
+
+.final {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.final a {
+  padding: 14px 30px;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 18px;
+}
+
+.hidden {
+  display: none;
+}
+
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+  z-index: 9999;
+}
+
+#page-transition.active {
+  opacity: 1;
+}
+
+@media (max-width: 600px) {
+  .hub {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url('../assets/bg-letter1.jpg') center / cover no-repeat fixed;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+
+    .slider-card {
+      background: rgba(255, 255, 255, 0.95);
+      width: 90%;
+      max-width: 900px;
+      padding: 40px;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      margin: 20px;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .header-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(30px, 4vw, 46px);
+      color: #5d8aa8;
+      margin: 0 0 10px;
+    }
+
+    .header-subtitle {
+      font-size: 16px;
+      color: #777;
+      margin-bottom: 30px;
+    }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 700px;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border: 5px solid #fff;
+      position: relative;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .controls-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 500px;
+      margin-top: 25px;
+    }
+
+    .nav-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: #e74c3c;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+      transition: transform 0.2s ease, background 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-btn:hover {
+      background: #c0392b;
+      transform: translateY(-3px);
+    }
+
+    .video-info {
+      text-align: center;
+    }
+
+    .video-title {
+      font-size: clamp(16px, 1.5vw, 20px);
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .video-counter {
+      font-size: 14px;
+      color: #888;
+      background: #eee;
+      padding: 4px 12px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .back-arrow {
+      position: fixed;
+      bottom: 30px;
+      right: 40px;
+      width: 55px;
+      height: 55px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      color: #333;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+
+    .back-arrow:hover {
+      transform: scale(1.1);
+      color: #5d8aa8;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        height: 100dvh;
+        overflow-y: auto;
+        align-items: flex-start;
+        padding-top: 20px;
+      }
+
+      .slider-card {
+        padding: 25px 15px;
+        width: 85%;
+        margin-bottom: 80px;
+      }
+
+      .header-title {
+        font-size: 32px;
+      }
+
+      .header-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .video-wrapper {
+        border-width: 3px;
+      }
+
+      .controls-container {
+        gap: 15px;
+      }
+
+      .nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .video-title {
+        font-size: 16px;
+      }
+
+      .back-arrow {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="slider-card">
+
+    <div class="header-title">A Collection</div>
+    <div class="header-subtitle">Swipe to see more</div>
+
+    <div class="video-wrapper">
+      <video id="mainVideo" controls preload="metadata">
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="controls-container">
+      <button class="nav-btn" onclick="prevVideo()"><i class="fas fa-chevron-left"></i></button>
+
+      <div class="video-info">
+        <div class="video-title" id="videoTitle">Loading...</div>
+        <div class="video-counter" id="videoCounter">1 / 1</div>
+      </div>
+
+      <button class="nav-btn" onclick="nextVideo()"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+  </div>
+
+  <div class="back-arrow" onclick="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </div>
+
+  <script>
+    const letterId = "2";
+    let opened = JSON.parse(localStorage.getItem('openedLetters')) || [];
+    if (!opened.includes(letterId)) {
+      opened.push(letterId);
+      localStorage.setItem('openedLetters', JSON.stringify(opened));
+    }
+
+    const videos = [
+      {
+        src: "../assets/pookie_dance1.mp4",
+        title: "Pookie Dance yours"
+      },
+      {
+        src: "../assets/pookie_dance.mp4",
+        poster: "../assets/thumbnail_1.png",
+        title: "Pookie Dance Mine"
+      },
+      {
+        src: "../assets/asl.mp4",
+        poster: "../assets/t1.jpg",
+        title: "Anokhi si ladki..."
+      },
+      {
+        src: "../assets/naadaniya.mp4",
+        title: "o(*￣▽￣*)ブ"
+      },
+      {
+        src: "../assets/Video_1.mp4",
+        poster: "../assets/thumbnail_2.png",
+        title: "Hmm"
+      }
+    ];
+
+    let currentIndex = 0;
+    const videoEl = document.getElementById('mainVideo');
+    const titleEl = document.getElementById('videoTitle');
+    const counterEl = document.getElementById('videoCounter');
+
+    function loadVideo(index) {
+      const data = videos[index];
+      videoEl.src = data.src;
+
+      if (data.poster) {
+        videoEl.poster = data.poster;
+      } else {
+        videoEl.removeAttribute("poster");
+      }
+      titleEl.textContent = data.title;
+      counterEl.textContent = `${index + 1} / ${videos.length}`;
+    }
+
+    function nextVideo() {
+      currentIndex = (currentIndex + 1) % videos.length;
+      loadVideo(currentIndex);
+    }
+
+    function prevVideo() {
+      currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+      loadVideo(currentIndex);
+    }
+
+    function goBack() {
+      window.location.href = '../hub.html';
+    }
+
+    loadVideo(currentIndex);
+  </script>
+  <script src='../js/security.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+body {
+  background: url('../assets/bg-1.jpg') center / cover no-repeat fixed;
+  position: relative;
+  font-family: serif;
+}
+
+.letters-stack {
+  position: absolute;
+  bottom: 85%;
+  left: 19%;
+  width: min(70vw, 260px);
+  height: auto;
+}
+
+.letter {
+  position: absolute;
+  scale: 1.5;
+  width: clamp(180px, 22vw, 260px);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(-40vw) rotate(-10deg) ;
+  transition:
+    transform 0.9s cubic-bezier(.22, .61, .36, 1),
+    opacity 0.6s ease;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
+}
+
+.l1.show {
+  transform: rotate(0deg);
+  z-index: 1;
+}
+
+.l2.show {
+  transform: rotate(-15deg);
+  z-index: 2;
+}
+
+.l3.show {
+  transform: rotate(15deg);
+  z-index: 3;
+}
+
+.l4.show {
+  transform: rotate(0deg);
+  z-index: 4;
+}
+
+.letter.show {
+  opacity: 1;
+}
+
+.letter:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.8s ease;
+}
+
+#page-transition.active {
+  opacity: 1;
+}
+
+.hint-text {
+  position: absolute;
+  bottom: 60%;
+  right: 16%;
+  font-size: clamp(0.9rem, 2.5vw, 1.25rem);
+  letter-spacing: 0.15em;
+  color: rgba(0, 0, 0, 0.75);
+  font-family: 'Baloo 2', cursive;
+  opacity: 1;
+  pointer-events: none;
+}

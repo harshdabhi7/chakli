@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maybe?</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url('../assets/bg-letter1.jpg') center / cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .slider-container {
+      width: min(90vw, 900px);
+      height: min(70vh, 500px);
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .text-section {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-right: 2px dashed #aecce0;
+    }
+
+    .poem-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(26px, 3vw, 38px);
+      color: #5d8aa8;
+      margin-bottom: 20px;
+    }
+
+    .poem-content {
+      font-size: clamp(15px, 1.4vw, 20px);
+      line-height: 1.8;
+      color: #555;
+      min-height: 150px;
+    }
+
+    .image-section {
+      flex: 1.2;
+      position: relative;
+      background: #f0f8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide-image.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 20px;
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-btn:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .prev-btn {
+      left: 20px;
+    }
+
+    .next-btn {
+      right: 20px;
+    }
+
+    .bow-decoration {
+      position: absolute;
+      width: 60px;
+      opacity: 0.8;
+    }
+
+    .bow-tl {
+      top: -10px;
+      left: -10px;
+      transform: rotate(-15deg);
+    }
+
+    .bow-bl {
+      bottom: -10px;
+      left: -10px;
+      transform: rotate(15deg);
+    }
+
+    .back-arrow {
+      position: fixed;
+      bottom: 40px;
+      right: 50px;
+      width: 60px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .back-arrow:hover {
+      transform: translateX(5px) scale(1.1);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .text-slide {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .text-slide.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        height: 100dvh;
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 20px 0;
+      }
+
+      .slider-container {
+        flex-direction: column-reverse;
+        width: 90%;
+        height: auto;
+        min-height: 80vh;
+        margin: auto;
+      }
+
+      .image-section {
+        flex: 1;
+        min-height: 300px;
+        width: 100%;
+        border-bottom: 2px dashed #aecce0;
+      }
+
+      .text-section {
+        flex: 0.8;
+        width: 100%;
+        padding: 20px;
+        border-right: none;
+        border-top: none;
+      }
+
+      .poem-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .poem-content {
+        font-size: 14px;
+        line-height: 1.6;
+        min-height: auto;
+      }
+
+      .nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+
+      .prev-btn {
+        left: 10px;
+      }
+
+      .next-btn {
+        right: 10px;
+      }
+
+      .back-arrow {
+        bottom: 15px;
+        right: 20px;
+        width: 45px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        padding: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="slider-container">
+
+    <div class="text-section">
+
+      <div class="text-slide active" data-index="0">
+        <h2 class="poem-title">Chakli</h2>
+        <p class="poem-content">
+          Pichhle ek saal ka safar… <br>
+          ya shayad suffer, bata du kya?<br>
+          Ek kitaab likhi hai -<br>
+          kaho toh padh ke suna du kya?<br>
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="1">
+        <h2 class="poem-title">Chhotu Don</h2>
+        <p class="poem-content">
+          Nahi nahi abhi nahi kuchh din baad sayad,<br>
+          reason kuchh khash nahi hai wo kya hai na,<br>
+          abhi mood nahi hai, tak tak read some poems...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="2">
+        <h2 class="poem-title">Soft Phool</h2>
+        <p class="poem-content">
+          Tum par toh kya achha nahi lagta hai,<br>
+          Tumhare baalon me lagne ke baad toh ye phool achha lagta hai,<br>
+          Jo tum pahan lo chudi aur payal,<br>
+          Toh din bhaar inki awaz sunna achha lagta hai,<br>
+          Tum laga lo mathe par chand jesi bindi,<br>
+          uske baad yeh chaand achha lagta hai...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="3">
+        <h2 class="poem-title">hmm</h2>
+        <p class="poem-content">
+          I may not be everyone's cup of tea,<br>
+          but I'm someone's shot of tequila...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="4">
+        <h2 class="poem-title">Panda</h2>
+        <p class="poem-content">
+          My kind of thing is-<br>
+          panda ki tarah,<br>
+          zyada demands nahi,<br>
+          bas paas rehna, share karna,<br>
+          aur bina awaaz ke<br>
+          sab kuch theek kar dena...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="5">
+        <h2 class="poem-title">Eyes💕</h2>
+        <p class="poem-content">
+          Pasandida rang<br>
+          puchhte ho mujhse,<br>
+          Ruko uski ankhein,<br>
+          dekh ke aata hu..<br>
+          Yaad hai mujhe phir bhi bas,<br>
+          ek baar dekh ke aata hu...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="6">
+        <h2 class="poem-title">Maybe</h2>
+        <p class="poem-content">
+          Maybe this is my bare minimum,<br>
+          tumhare liye wo sab karna jis se tumhe khushi mile...<br>
+          without expecting anything in return...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="7">
+        <h2 class="poem-title">Laughfter - 1</h2>
+        <p class="poem-content">
+          Hasti hai toh bhool jaati hai<br>
+          ki aas-paas kaun hai,<br>
+          Udaas hoti hai toh<br>
+          chup ho jaati hai.<br>
+          (pehle toh mujhe call kar deti thi...)
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="8">
+        <h2 class="poem-title">Laughfter - 2</h2>
+        <p class="poem-content">
+          Apni tasveerein bohot kheenchti hai,<br>
+          akele mein dance karti hai<br>
+          Dusron ki fikr toh khub karti hai,<br>
+          magar khud se mohabbat bhi<br>
+          behisab karti hai...
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="9">
+        <h2 class="poem-title">Laughfter - 3</h2>
+        <p class="poem-content">
+          Duniya ki nazaron mein<br>
+          ek aam si ladki,<br>
+          magar meri nazar se dekho toh<br>
+          badi khaas lagti hai.<br>
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="10">
+        <h2 class="poem-title">Nothing much</h2>
+        <p class="poem-content">
+          aur toh poems nahi hai..<br>
+          kya karu likhna chhod diya hai<br>
+          open another letter there might be something.
+        </p>
+      </div>
+
+      <div class="text-slide" data-index="11">
+        <h2 class="poem-title">ヾ(^▽^*)))</h2>
+        <p class="poem-content">
+          and han after final letter,<br>
+          there is final page...<br>
+          Click on corner arrow.<br>
+          Happy Birthday..🫣💖
+        </p>
+      </div>
+
+    </div>
+
+    <div class="image-section">
+      <button class="nav-btn prev-btn">&#10094;</button>
+      <button class="nav-btn next-btn">&#10095;</button>
+
+      <img
+        src="../assets/cafe_3.jpg"
+        class="slide-image active" data-index="0" alt="Memory 1">
+
+      <img
+        src="../assets/child_version_1.jpg"
+        class="slide-image" data-index="1" alt="Memory 2">
+
+      <img
+        src="../assets/idk3.jpg"
+        class="slide-image" data-index="2" alt="Memory 3">
+
+      <img
+        src="../assets/t2.jpg"
+        class="slide-image" data-index="3" alt="Memory 4">
+
+      <img
+        src="../assets/panda.jpg"
+        class="slide-image" data-index="4" alt="Memory 5">
+
+      <img
+        src="../assets/her_eyes_1.jpg"
+        class="slide-image" data-index="5" alt="Memory 6">
+
+      <img
+        src="../assets/t11.jpg"
+        class="slide-image" data-index="6" alt="Memory 7">
+
+      <img
+        src="../assets/Laugh.jpg"
+        class="slide-image" data-index="7" alt="Memory 8">
+
+      <img
+        src="../assets/Laugh1.jpg"
+        class="slide-image" data-index="8" alt="Memory 9">
+      
+      <img
+        src="../assets/t8.jpg"
+        class="slide-image" data-index="9" alt="Memory 10">
+
+      <img
+        src="../assets/navaratri_4.jpg"
+        class="slide-image" data-index="10" alt="Memory 11">
+
+      <img
+        src="../assets/t16.jpg"
+        class="slide-image" data-index="11" alt="Memory 12">
+    </div>
+
+  </div>
+
+  <div class="back-arrow" onclick="goBack()">
+    <svg width="60" height="40" viewBox="0 0 60 40" fill="none" stroke="black" stroke-width="3" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M20 20 H50 M20 20 L30 10 M20 20 L30 30" />
+    </svg>
+  </div>
+
+  <script>
+    const letterId = "1";
+    let opened = JSON.parse(localStorage.getItem('openedLetters')) || [];
+    if (!opened.includes(letterId)) {
+      opened.push(letterId);
+      localStorage.setItem('openedLetters', JSON.stringify(opened));
+    }
+
+    const texts = document.querySelectorAll('.text-slide');
+    const images = document.querySelectorAll('.slide-image');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    let currentIndex = 0;
+    const maxIndex = texts.length - 1;
+
+    function updateSlide(index) {
+      texts.forEach(t => t.classList.remove('active'));
+      images.forEach(i => i.classList.remove('active'));
+
+      texts[index].classList.add('active');
+      images[index].classList.add('active');
+    }
+
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === maxIndex) ? 0 : currentIndex + 1;
+      updateSlide(currentIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex === 0) ? maxIndex : currentIndex - 1;
+      updateSlide(currentIndex);
+    });
+
+    function goBack() {
+      window.location.href = '../hub.html';
+    }
+  </script>
+<script src='../js/security.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./css/main.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: url('assets/bg-letter1.jpg') center / cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .final-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            animation: popIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #5d8aa8;
+            margin: 0 0 20px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .heart-icon {
+            font-size: 50px;
+            color: #e74c3c;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .home-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #5d8aa8;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(93, 138, 168, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .home-btn:hover {
+            background: #4a7590;
+            transform: translateY(-5px);
+        }
+
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.3);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.3);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                height: 100dvh;
+                margin: 0;
+                overflow-y: auto;
+            }
+
+            .final-card {
+                padding: 40px 20px;
+                width: 85%;
+                margin: 20px auto;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            p {
+                font-size: 16px;
+                margin-bottom: 25px;
+            }
+
+            .heart-icon {
+                font-size: 40px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="confetti"></canvas>
+    <div class="final-card">
+        <div class="heart-icon">❤️</div>
+        <h1>Happy Birthday!</h1>
+        <p>
+            I hope this little gift brought a smile to your face.<br>
+            Wishing you a year filled with love, laughter, and joy.<br>
+            There's no expectation behind it<br>
+            no meaning, no request, no reason beyond this.<br>
+            You owe me nothing.<br>
+            Keep smiling...
+        </p>
+        <a href="./index.html" class="home-btn">Play Again</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const duration = 5 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function random(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) {
+                return clearInterval(interval);
+            }
+            const particleCount = 50 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: random(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+    </script>
+    <script src='./js/security.js'></script>
+</body>
+
+</html>
